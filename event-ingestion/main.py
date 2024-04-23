@@ -5,6 +5,7 @@ from typing import Annotated
 import pika
 from fastapi import FastAPI, WebSocket, Depends
 from pika.adapters.blocking_connection import BlockingChannel
+from starlette.websockets import WebSocketDisconnect
 
 app = FastAPI(
     title="GitHub Events Ingestion Microservice",
@@ -54,7 +55,10 @@ async def websocket_endpoint(websocket: WebSocket, channel: Annotated[BlockingCh
     await websocket.accept()
     while True:
         if websocket.headers.get("X-GitHub-Event") not in ["push", "pull_request"]:
-            continue
+            await websocket.send_text("Ignored event type")
+            return
+        else:
+            await websocket.send_text("Accepted event type")
         data = await websocket.receive_json()
         isoformat = datetime.now(timezone.utc).isoformat()
         data["timestamp"] = isoformat
@@ -65,3 +69,4 @@ async def websocket_endpoint(websocket: WebSocket, channel: Annotated[BlockingCh
             body=json.dumps(data)
         )
         print(f"[{isoformat}] Received event from GitHub of type {websocket.headers.get('X-GitHub-Event')}")
+

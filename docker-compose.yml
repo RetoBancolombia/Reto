@@ -2,7 +2,18 @@ name: reto
 
 
 services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: frontend
+    # ports:
+    #   - '3000:3000'
+    volumes:
+      - ./reto-frontend:/app
+      - /app/node_modules
   nginx:
+    container_name: nginx
     image: nginx
     volumes:
       -./nginx.conf:/etc/nginx/nginx.conf:ro

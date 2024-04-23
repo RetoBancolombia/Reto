@@ -6,7 +6,20 @@ import pika
 from fastapi import FastAPI, WebSocket, Depends
 from pika.adapters.blocking_connection import BlockingChannel
 
-app = FastAPI()
+app = FastAPI(
+    title="GitHub Events Ingestion Microservice",
+    description="This is a microservice to ingest events from GitHub and store them in a RabbitMQ queue",
+    summary="GitHub Events Ingestion Microservice",
+    version="0.1.0",
+    contact={
+        "name": "Diego Granada Martinez",
+        "email": "diegogranada7@gmail.com"
+    },
+    license_info={
+        "name": "Apache 2.0 with Commons Clause",
+        "url": "https://commonsclause.com/"
+    }
+)
 
 
 async def queue():

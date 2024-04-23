@@ -1,0 +1,21 @@
+name: reto
+
+
+services:
+  nginx:
+    image: nginx
+    volumes:
+      -./nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "10080:80"
+      - "10443:443"
+    networks:
+      - frontend
+      - backend
+      - database
+      
+
+networks:
+  frontend:
+  backend:
+  database:

@@ -4,7 +4,7 @@ name: reto
 services:
   frontend:
     build:
-      context: .
+      context: ./reto-frontend
       dockerfile: Dockerfile
     container_name: frontend
     # ports:
@@ -16,14 +16,16 @@ services:
     container_name: nginx
     image: nginx
     volumes:
-      -./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
     ports:
-      - "10080:80"
-      - "10443:443"
+      - "20080:80"
+      - "20443:443"
     networks:
       - frontend
       - backend
       - database
+    depends_on:
+      - frontend
       
 
 networks:

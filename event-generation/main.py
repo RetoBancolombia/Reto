@@ -1,15 +1,8 @@
-import json
 import multiprocessing
 import time
-from datetime import datetime, timezone
-from multiprocessing.connection import Listener
-from typing import Annotated
 
-import pika
 import uvicorn
-from fastapi import FastAPI, WebSocket, Depends
-from pika.adapters.blocking_connection import BlockingChannel
-from starlette.websockets import WebSocketDisconnect
+from fastapi import FastAPI
 
 import worker
 

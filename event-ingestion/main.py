@@ -60,8 +60,9 @@ async def websocket_endpoint(websocket: WebSocket, channel: Annotated[BlockingCh
         await websocket.send_text("Accepted event type")
     data = await websocket.receive_json()
     isoformat = datetime.now(timezone.utc).isoformat()
-    data["timestamp"] = isoformat
-    data["source"] = "github"
+    data["event_timestamp"] = isoformat
+    data["event_source"] = "github"
+    data["event_type"] = websocket.headers.get("X-GitHub-Event")
     channel.basic_publish(
         exchange='',
         routing_key='events',

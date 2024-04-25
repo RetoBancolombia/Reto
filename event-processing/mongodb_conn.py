@@ -7,8 +7,8 @@ class MongoManager(object):
     """
     Singleton class to manage the MongoDB connection
     """
-    __client = None
-    __instance = None
+    _client = None
+    _instance = None
 
     @staticmethod
     def get_db_instance() -> pymongo.database.Database:
@@ -16,17 +16,17 @@ class MongoManager(object):
         Returns an instance of the 'reto' database
         :return:
         """
-        if MongoManager.__instance == None:
+        if MongoManager._instance == None:
             MongoManager()
-        return MongoManager.__instance
+        return MongoManager._instance
 
     def __init__(self):
-        if self.__instance != None:
+        if MongoManager._instance != None:
             raise Exception("This class is a singleton!")
         else:
-            self.__client = pymongo.MongoClient(
-                os.getenv("MONGO_URI", "mongodb://root:root@localhost:27017/")
+            MongoManager._client = pymongo.MongoClient(
+                os.getenv("MONGO_URI", "mongodb://root:root@localhost:27017/?authSource=reto")
             )
 
-            self.__instance = self.__client.reto
+            MongoManager._instance = MongoManager._client.reto
 

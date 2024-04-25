@@ -20,7 +20,7 @@ processors_dict = {
 }
 
 
-def callback(channel, method, properties, body):
+def callback(channel, method, properties, raw_body):
     """
     Method to handle the messages received from the queue
     :param channel:
@@ -33,8 +33,9 @@ def callback(channel, method, properties, body):
     # data["event_timestamp"] = isoformat
     # data["event_source"] = "github"
     # data["event_type"] = websocket.headers.get("X-GitHub-Event")'
-    print(f" [{datetime.now().isoformat()}] Received message")
+    print(f"[{datetime.now().isoformat()}] [INFO] Received message")
     db = MongoManager.get_db_instance()
+    body = json.loads(raw_body)
     try:
         processor = processors_dict[body["event_source"]]
         processor(body, db)

@@ -29,7 +29,7 @@ services:
     depends_on:
       - frontend
   rabbit:
-    container_name: rabbit
+    container_name: rabbit 
     image: rabbitmq:3-management
     environment:
       - RABBITMQ_DEFAULT_PASS=pass
@@ -50,8 +50,8 @@ services:
       start_interval: 1s
       retries: 30
     environment:
-      # MONGO_INITDB_ROOT_USERNAME: root
-      # MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: Hamper-Snout0-Sprinkled-Unhidden
       MONGO_INITDB_DATABASE: reto
     ports:
       - 27017:27017
@@ -98,6 +98,26 @@ services:
   #   volumes:
   #     - "mongo2_data:/data/db"
   #     - "mongo2_config:/data/configdb"
+
+  event-ingestion:
+    build: 
+      context: ./event-ingestion
+      dockerfile: Dockerfile
+    container_name: event-ingestion
+    environment:
+      - RABBIT_HOST=rabbit
+      - RABBIT_PORT=5672
+      - RABBIT_USER=guest
+      - RABBIT_PASS=pass
+    depends_on:
+      - rabbit
+    ports:
+      - '3205:3205'
+    networks:
+      - backend-net
+    profiles:
+      - backend
+  
 
 volumes:
   mongo1_data:

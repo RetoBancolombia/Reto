@@ -30,7 +30,7 @@ export default function Commits() {
                     <h1>"Loading..."</h1>
                     <p>Loading...</p>
                 </> : <>
-                    <h1>{`${numberCommits} commits in total`}</h1>
+                    <h1>Pull requests</h1>
                     <p>Across all repositories, there were {numberCommits} commits found</p>
                 </>
             }

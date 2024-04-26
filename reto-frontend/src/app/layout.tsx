@@ -3,7 +3,7 @@ import {Inter} from "next/font/google";
 import "./globals.css";
 import React from "react";
 import {Container, Nav, Navbar, NavbarBrand, NavLink} from "react-bootstrap";
-
+import "react-datepicker/dist/react-datepicker.css";
 const inter = Inter({subsets: ["latin"]});
 
 export const metadata: Metadata = {

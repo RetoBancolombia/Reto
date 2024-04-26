@@ -28,7 +28,7 @@ app = FastAPI(
 
 async def queue():
     connection = pika.BlockingConnection(pika.ConnectionParameters(
-        host=os.getenv("RABBIT_HOST", "asdasd"),
+        host=os.getenv("RABBIT_HOST", "localhost"),
         port=os.getenv("RABBIT_PORT", 5672),
         credentials=pika.PlainCredentials(os.getenv("RABBIT_USER", "guest"), os.getenv("RABBIT_PASS", "pass"))
     ))

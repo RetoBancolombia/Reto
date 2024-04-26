@@ -25,7 +25,7 @@ class MongoManager(object):
             raise Exception("This class is a singleton!")
         else:
             MongoManager._client = pymongo.MongoClient(
-                os.getenv("MONGO_URI", "mongodb://root:root@localhost:27017/?authSource=reto")
+                os.getenv("MONGODB_URI", "mongodb://reto:Extrovert-Unbiased9-Oxidize-Recycler@localhost:27017/?authSource=reto")
             )
 
             MongoManager._instance = MongoManager._client.reto

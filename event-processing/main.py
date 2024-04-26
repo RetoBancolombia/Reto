@@ -1,15 +1,14 @@
+
 import json
 import os
 import sys
-from datetime import datetime, timezone
-from typing import Annotated
-
+from datetime import datetime
 import pika
-from pika.adapters.blocking_connection import BlockingChannel
-from pymongo import MongoClient
+from dotenv import load_dotenv
+load_dotenv()
+from providers.github import github_process
+from providers.mongodb_conn import MongoManager
 
-from github import github_process
-from mongodb_conn import MongoManager
 
 """
 Define the processors for each event source
@@ -45,12 +44,12 @@ def callback(channel, method, properties, raw_body):
 
 
 def main():
-
     rabbit_connection = pika.BlockingConnection(pika.ConnectionParameters(
-        host='localhost',
-        port=5672,
-        credentials=pika.PlainCredentials("guest", "pass")
+        host=os.getenv("RABBIT_HOST", "localhost"),
+        port=os.getenv("RABBIT_PORT", 5672),
+        credentials=pika.PlainCredentials(os.getenv("RABBIT_USER", "guest"), os.getenv("RABBIT_PASS", "pass"))
     ))
+    print("Connected to RabbitMQ")
     rabbit_channel = rabbit_connection.channel()
 
     rabbit_channel.queue_declare(queue='events', durable=True)
@@ -64,6 +63,7 @@ def main():
 
 if __name__ == '__main__':
     try:
+        print("Starting event-processing service")
         main()
     except KeyboardInterrupt:
         print('Interrupted')

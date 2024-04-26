@@ -38,6 +38,13 @@ services:
         - 15672:15672
     networks:
       - backend-net
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 30s
+      timeout: 30s
+      start_period: 5s
+      start_interval: 1s
+      retries: 3
   mongo-1:
     container_name: mongo-1
     image: mongo:7.0
@@ -115,6 +122,27 @@ services:
       - '3205:3205'
     networks:
       - backend-net
+    profiles:
+      - backend
+  event-processing:
+    build: 
+      context: ./event-processing
+      dockerfile: Dockerfile
+    container_name: event-processing
+    environment:
+      - MONGODB_URI=mongodb://reto:Extrovert-Unbiased9-Oxidize-Recycler@mongo-1:27017/?authSource=reto
+      - RABBIT_HOST=rabbit
+      - RABBIT_PORT=5672
+      - RABBIT_USER=guest
+      - RABBIT_PASS=pass
+    depends_on:
+      rabbit:
+        condition: service_healthy
+      mongo-1:
+        condition: service_started
+    networks:
+      - backend-net
+      - database-net
     profiles:
       - backend
   

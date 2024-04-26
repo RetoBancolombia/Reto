@@ -1,11 +1,14 @@
 import json
+import os
 from datetime import datetime, timezone
 from typing import Annotated
-
+from dotenv import load_dotenv
 import pika
 from fastapi import FastAPI, WebSocket, Depends
 from pika.adapters.blocking_connection import BlockingChannel
 from starlette.websockets import WebSocketDisconnect
+
+load_dotenv()
 
 app = FastAPI(
     title="GitHub Events Ingestion Microservice",
@@ -25,10 +28,11 @@ app = FastAPI(
 
 async def queue():
     connection = pika.BlockingConnection(pika.ConnectionParameters(
-        host='localhost',
-        port=5672,
-        credentials=pika.PlainCredentials("guest", "pass")
+        host=os.getenv("RABBIT_HOST", "asdasd"),
+        port=os.getenv("RABBIT_PORT", 5672),
+        credentials=pika.PlainCredentials(os.getenv("RABBIT_USER", "guest"), os.getenv("RABBIT_PASS", "pass"))
     ))
+    print("Connected to RabbitMQ")
     channel = connection.channel()
     channel.queue_declare(queue='events', durable=True)
     try:
@@ -70,4 +74,3 @@ async def websocket_endpoint(websocket: WebSocket, channel: Annotated[BlockingCh
     )
     print(f"[{isoformat}] Received event from GitHub of type {websocket.headers.get('X-GitHub-Event')}")
     await websocket.close()
-

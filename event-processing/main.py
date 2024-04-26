@@ -2,6 +2,7 @@
 import json
 import os
 import sys
+import time
 from datetime import datetime
 import pika
 from dotenv import load_dotenv
@@ -44,11 +45,22 @@ def callback(channel, method, properties, raw_body):
 
 
 def main():
-    rabbit_connection = pika.BlockingConnection(pika.ConnectionParameters(
-        host=os.getenv("RABBIT_HOST", "localhost"),
-        port=os.getenv("RABBIT_PORT", 5672),
-        credentials=pika.PlainCredentials(os.getenv("RABBIT_USER", "guest"), os.getenv("RABBIT_PASS", "pass"))
-    ))
+    rabbit_connection = None
+    for i in range(15):
+        print(f"Trying to connect to RabbitMQ, attempt {i}")
+
+        try:
+            rabbit_connection = pika.BlockingConnection(pika.ConnectionParameters(
+                host=os.getenv("RABBIT_HOST", "localhost"),
+                port=os.getenv("RABBIT_PORT", 5672),
+                credentials=pika.PlainCredentials(os.getenv("RABBIT_USER", "guest"), os.getenv("RABBIT_PASS", "pass"))
+            ))
+            break
+        except:
+            print('Connection failed, retrying in 3s')
+            # avoid rapid reconnection on longer RMQ server outage
+            time.sleep(3)
+
     print("Connected to RabbitMQ")
     rabbit_channel = rabbit_connection.channel()
 

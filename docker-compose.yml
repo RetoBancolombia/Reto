@@ -46,7 +46,7 @@ services:
       test: rabbitmq-diagnostics -q ping
       interval: 30s
       timeout: 30s
-      start_period: 5s
+      start_period: 10s
       start_interval: 1s
       retries: 3
   mongo-1:

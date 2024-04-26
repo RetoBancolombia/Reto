@@ -27,7 +27,7 @@ export default function Commits() {
         <div>
             {
                 numberCommits === null ? <>
-                    <h1>"Loading..."</h1>
+                    <h1>Loading...</h1>
                     <p>Loading...</p>
                 </> : <>
                     <h1>{`${numberCommits} commits in total`}</h1>

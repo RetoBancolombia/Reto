@@ -1,13 +1,12 @@
 import {NextApiRequest, NextApiResponse} from "next";
 import database from "../../../../middleware/database";
-import nextConnect, {createRouter} from "next-connect";
-import {IncomingMessage} from "node:http";
+import {createRouter} from "next-connect";
 // @ts-ignore
 const router = createRouter<NextApiRequest, NextApiResponse>();
 
 router.use(database)
-    .get(async (req, res, next) => {
-        const open = Boolean(req.query.open) ?? true;
+    .get(async (req, res) => {
+        const open = req.query.open === "true";
         let filter;
         if (open){
             filter = {

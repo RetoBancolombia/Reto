@@ -2,38 +2,51 @@
 
 import DatePicker from "react-datepicker";
 import {useEffect, useState} from "react";
+import {Form, FormCheck} from "react-bootstrap";
 
-export default function Commits() {
-    const [numberCommits, setNumberCommits] = useState(null)
+export default function PullRequests() {
+    const [numberPRs, setNumberPRs] = useState(null)
+    const [isOpened, setIsOpened] = useState(true)
     const [fromDate, setFromDate] = useState(new Date("2020-01-01T05:00:01Z"))
     const [toDate, setToDate] = useState(new Date())
 
 
-    function updateCommits() {
-        fetch("/api/commits/total-count?" + new URLSearchParams({
+    function updatePRs() {
+        fetch("/api/pull-requests/total-count?" + new URLSearchParams({
             from: fromDate.toISOString(),
-            to: toDate.toISOString()
+            to: toDate.toISOString(),
+            open: String(isOpened)
         }))
             .then((res) => res.json())
             .then((data) => {
-                setNumberCommits(data)
+                setNumberPRs(data)
             })
     }
 
     useEffect(() => {
-        updateCommits();
-    }, [fromDate, toDate]);
+        updatePRs();
+    }, [fromDate, toDate, isOpened]);
     return (
         <div>
-            {
-                numberCommits === null ? <>
-                    <h1>"Loading..."</h1>
-                    <p>Loading...</p>
-                </> : <>
-                    <h1>Pull requests</h1>
-                    <p>Across all repositories, there were {numberCommits} commits found</p>
-                </>
-            }
+
+            <h1>Pull requests</h1>
+            <Form>
+                <div className="mb-3">
+                    <FormCheck
+                        type="radio"
+                        label="Opened pull requests"
+                        checked={isOpened}
+                        onChange={_ => setIsOpened(true)}
+                    />
+                    <FormCheck
+                        type="radio"
+                        label="Closed pull requests"
+                        checked={!isOpened}
+                        onChange={_ => setIsOpened(false)}
+                    />
+                </div>
+            </Form>
+            <p>Across all repositories, there were {numberPRs} pull requests found</p>
             <p></p>
             <form>
                 <legend>Disabled fieldset example</legend>

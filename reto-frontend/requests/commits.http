@@ -1,0 +1,25 @@
+#### Count with no filter
+GET http://localhost:3000/api/commits/total-count
+
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+
+    client.test("Count is a valid number", function () {
+        client.assert(Number.isInteger(response.body) , `The response was not a number: ${response.body}`);
+    });
+%}
+
+#### Count with date filter
+GET http://localhost:3000/api/commits/total-count?from=2024-02-10T15:05:49.188404&to=2024-04-20T15:05:49.188404
+
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+
+    client.test("Count is a valid number", function () {
+        client.assert(Number.isInteger(response.body) , `The response was not a number: ${response.body}`);
+    });
+%}

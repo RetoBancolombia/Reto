@@ -31,12 +31,12 @@ export default function Commits() {
                     <p>Loading...</p>
                 </> : <>
                     <h1>{`${numberCommits} commits in total`}</h1>
-                    <p>Across all repositories, there were {numberCommits} commits found</p>
+                    <p>Across all repositories, there were {numberCommits} commits found within the given time
+                        period</p>
                 </>
             }
             <p></p>
             <form>
-                <legend>Disabled fieldset example</legend>
                 <div className="mb-3">
                     <label>From: </label>
                     <DatePicker

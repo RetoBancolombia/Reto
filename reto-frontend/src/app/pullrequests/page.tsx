@@ -46,10 +46,11 @@ export default function PullRequests() {
                     />
                 </div>
             </Form>
-            <p>Across all repositories, there were {numberPRs} pull requests found</p>
+            <p>Across all repositories, there were {numberPRs} pull requests found that
+                were {isOpened ? "opened" : "closed"} within the given time period.</p>
             <p></p>
             <form>
-                <legend>Disabled fieldset example</legend>
+                <legend>Pull requests {isOpened ? "opened" : "closed"} with a given time period</legend>
                 <div className="mb-3">
                     <label>From: </label>
                     <DatePicker

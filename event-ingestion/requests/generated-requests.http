@@ -1,0 +1,41 @@
+### Ping endpoint
+GET http://{{host}}/events/ingestion/ping
+
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+
+    // "response content is pong"
+    client.test("Response content is pong", function () {
+          client.assert(response.body === "pong", "Response body is not 'pong'");
+     });
+
+    client.test("Response content-type is json", function () {
+        const type = response.contentType.mimeType;
+        client.assert(type === "application/json", `Expected 'application/json' but received '${type}'`);
+    });
+%}
+
+
+### Websocket test
+
+WEBSOCKET ws://{{host}}/events/ingestion/github/ws
+Accept:*/*
+Content-Type:application/json
+User-Agent:GitHub-Hookshot/300dae6
+X-GitHub-Delivery:44c57454-0136-11ef-8f7d-dcbb57f14c86
+X-GitHub-Event:push
+X-GitHub-Hook-ID:474170556
+X-GitHub-Hook-Installation-Target-ID:167820875
+X-GitHub-Hook-Installation-Target-Type:organization
+
+< ../examples/commit-push.json
+=== wait-for-server
+
+> {%
+    // Check if the connection was successful
+    client.test("Connection is successful", function () {
+        client.assert(response.body === 200, "Response status is not 200, its " + JSON.stringify(response.body));
+    });
+%}

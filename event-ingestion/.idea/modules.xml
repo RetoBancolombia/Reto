@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../event-generation/.idea/event-generation.iml" filepath="$PROJECT_DIR$/../event-generation/.idea/event-generation.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/event-ingestion.iml" filepath="$PROJECT_DIR$/.idea/event-ingestion.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../event-processing/.idea/event-processing.iml" filepath="$PROJECT_DIR$/../event-processing/.idea/event-processing.iml" />
     </modules>
   </component>
 </project>

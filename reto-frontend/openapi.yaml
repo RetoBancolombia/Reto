@@ -1,0 +1,74 @@
+openapi: 3.1.0
+x-stoplight:
+  id: vqxxvhdxdwasf
+info:
+  title: Reto Bancolombia
+  version: '1.0'
+  summary: ''
+servers:
+  - url: 'http://localhost:3000'
+  - url: 'https://reto.planni.me'
+    description: ''
+paths:
+  /api/commits/total-count:
+    parameters: [ ]
+    get:
+      summary: Get amount of commits
+      tags: [ ]
+      responses: { }
+      operationId: total-count-commits
+      description: 'Returns the amount of commits within the given range. If no date range is given, returns the total amount of commits.'
+      x-stoplight:
+        id: 2fwhu4gh26vz1
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: from
+          description: ISO Date string from which commits should be considered
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: to
+          description: ISO Date string up to which commits should be considered
+          required: true
+  /pull-requests/total-count:
+    get:
+      summary: Get amount of Pull Requests
+      operationId: total-count-pullrequests
+      responses:
+        '200':
+          description: Count
+          content:
+            text/plain:
+              schema:
+                type: integer
+      requestBody:
+        content: { }
+        description: ''
+      description: Get the amount of pull request openings (or closings) within a given time period
+      x-stoplight:
+        id: 0getwbxmdrygm
+      parameters:
+        - schema:
+            type: string
+          in: query
+          description: ISO Date string from which commits should be considered
+          name: from
+          required: true
+        - schema:
+            type: string
+          in: query
+          description: ISO Date string up to which commits should be considered
+          name: to
+          required: true
+        - schema:
+            type: string
+          in: query
+          required: true
+          name: open
+          description: 'Whether we are searching for pull request openings, or closings'
+    parameters: [ ]
+components:
+  schemas: { }

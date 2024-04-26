@@ -43,7 +43,7 @@ async def list_gitlab_projects(p_id: int):
 
 
 def server():
-    uvicorn.run(app, host="localhost", port=3210)
+    uvicorn.run(app, host="0.0.0.0", port=3210)
 
 
 if __name__ == "__main__":

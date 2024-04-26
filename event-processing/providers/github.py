@@ -28,7 +28,7 @@ timestamp {body['event_timestamp']}")
         db.commits.insert_many(commits, ordered=False)
     elif body["event_type"] == "pull_request":
         print(f"[{datetime.datetime.now().isoformat()}] [DEBUG] Received pull_request event from GitHub with \
-            timestamp {body['event_timestamp']}")
+timestamp {body['event_timestamp']}")
 
         def get_date(date_str):
             if date_str is not None:

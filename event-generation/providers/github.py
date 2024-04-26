@@ -205,7 +205,9 @@ class GithubProvider(Generator):
                                               "X-GitHub-Hook-Installation-Target-Type": "organization"
                                           })
             date_created = datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(
-                minutes=random.randint(0, 60 * 12))
+                minutes=random.randint(0, 60 * 12),
+                days=random.randint(0, 3 * 365)
+            )
             body = {
                 'action': 'opened',
                 'number': 1,
@@ -577,7 +579,8 @@ class GithubProvider(Generator):
                                               "X-GitHub-Hook-Installation-Target-Type": "organization"
                                           })
             date_created = datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(
-                minutes=random.randint(0, 60 * 12))
+                minutes=random.randint(0, 60 * 12),
+                days=random.randint(0, 3 * 365))
             body = {
                 'action': 'closed',
                 'number': 1,
@@ -947,7 +950,9 @@ def generate_github_commit():
         "distinct": True,
         "message": fake.sentence(),
         "timestamp": (datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(
-            minutes=random.randint(0, 60 * 12))).isoformat(),
+            minutes=random.randint(0, 60 * 12),
+            days=random.randint(0, 3 * 365)
+        )).isoformat(),
         "url": "https://github.com/RetoBancolombia/Reto/commit/40e200b007313b55c2d82fbf713a02d7be19a8d7",
         "author": {
             "name": "Diego Granada M",

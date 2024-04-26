@@ -25,6 +25,7 @@ router.use(database)
                 action: "closed"
             }
         }
+        // @ts-ignore
         const count = await req.db.collection("pullrequests").countDocuments(filter)
         res.send(count)
     })

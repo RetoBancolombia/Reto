@@ -41,7 +41,7 @@ export default function Commits() {
                     <label>From: </label>
                     <DatePicker
                         selected={fromDate}
-                        onChange={setFromDate}
+                        onChange={(date) => setFromDate(date!)}
                         selectsStart
                         showTimeSelect
                         dateFormat="Pp"
@@ -51,7 +51,7 @@ export default function Commits() {
                     <label>To: </label>
                     <DatePicker
                         selected={toDate}
-                        onChange={setToDate}
+                        onChange={(date) => setToDate(date!)}
                         selectsStart
                         showTimeSelect
                         minDate={fromDate}

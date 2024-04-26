@@ -1,0 +1,12 @@
+###
+
+# curl --location 'http://localhost:3210/gitlab/api/v4/projects'
+GET http://localhost:3210/gitlab/api/v4/projects
+
+###
+
+# curl --location 'http://localhost:3210/gitlab/api/v4/projects/4312/languages'
+GET http://localhost:3210/gitlab/api/v4/projects/4312/languages
+
+###
+

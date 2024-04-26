@@ -5,6 +5,7 @@ import uvicorn
 from fastapi import FastAPI
 
 import worker
+from providers.gitlab import get_fake_projects, get_fake_languages
 
 app = FastAPI(
     title="Repository event generation microservice",
@@ -27,14 +28,22 @@ async def root():
     return {"message": "Hello World"}
 
 
+@app.get("/gitlab/api/v4/projects")
+async def list_gitlab_projects():
+    return get_fake_projects()
 
-@app.get("/events/generation/ping")
-async def ping():
-    return "pong"
+
+@app.get("/gitlab/api/v4/projects/{p_id}/languages")
+async def list_gitlab_projects(p_id: int):
+    projects = get_fake_projects()
+
+    project = next(x for x in projects if x["id"] == p_id)
+    if len(project) > 0:
+        return get_fake_languages(int(project["id"]))
+
 
 def server():
-    uvicorn.run(app, host="localhost", port=3210, reload=True)
-
+    uvicorn.run(app, host="localhost", port=3210)
 
 
 if __name__ == "__main__":

@@ -59,6 +59,8 @@ El proyecto está creado para poder ser desplegado facilmente con Docker Compose
 
 `docker compose --profile backend up`
 
+En el caso de que se hagan cambios en el codigo, o se haga un `git pull` posterior, será necesario añadir la instrucción `--build` al comando de Docker Compose
+
 NGINX todavia no esta correctamente configurado, es lo unico. Sin embargo, todos los demas servicios deberian funcionar sobre localhost. Si se desea mayor seguridad (la cual quité por razones de desarrollo rapido), se pueden remover las instrucciones de `ports:` en todos los contenedores salvo `frontend` y  `nginx`. Unas complicaciones con mi servidor personal no me dejaron alcanzar a probar la segregacion de usuarios ocn privilegios limitados o la limitación de recursos. 
 
 Si lo logro desplegar (lo cual no prometo, debido a esos problemas previamente mencionados, lo desplegare en `https://reto.planni.me`)

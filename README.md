@@ -55,7 +55,7 @@ Este es un servicio mixto de Python y FastAPI que sirve para mockear los eventos
 
 ## Despliegue
 
-El proyecto está creado para poder ser desplegado facilmente con Docker Compose, y todos sus elementos estan contenerizados, con variables de entorno para configurarlos. En teoría (contactenme si tienen problemas, lo he probado en 2 máquinas), correr el proyecto solo requiere del comando:
+El proyecto está creado para poder ser desplegado facilmente con Docker Compose, y todos sus elementos estan contenerizados, con variables de entorno para configurarlos. En teoría (contactenme si tienen problemas, lo he probado en 2 máquinas), correr el proyecto solo requiere jalar el repositorio (`git clone https://github.com/RetoBancolombia/Reto.git`) y el comando:
 
 `docker compose --profile backend up`
 

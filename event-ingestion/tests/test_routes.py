@@ -29,7 +29,7 @@ def test_websocket():
     with client.websocket_connect("/events/ingestion/github/ws", headers=headers) as websocket:
         msg = websocket.receive_text()
         assert msg == "Accepted event type"
-        request_body = json.load(open("../examples/commit-push.json"))[1]
+        request_body = json.load(open("examples/commit-push.json"))[1]
         try:
             websocket.send_json(request_body)
         except WebSocketDisconnect:

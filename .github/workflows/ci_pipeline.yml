@@ -36,7 +36,7 @@ jobs:
           RABBIT_PASS: pass
         run: |
           pip install pytest 
-          pipenv run pytest
+          pytest tests/
           
       
   

@@ -34,7 +34,9 @@ services:
       - frontend
   rabbit:
     container_name: rabbit 
+    user: rabbit
     image: rabbitmq:3-management
+    restart: unless-stopped:5
     environment:
       - RABBITMQ_DEFAULT_PASS=pass
     ports:

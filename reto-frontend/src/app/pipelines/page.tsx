@@ -39,8 +39,8 @@ export default function Pipelines() {
                     />
                     <FormCheck
                         type="radio"
-                        label="Closed pull requests"
-                        checked={!{isSuccessful}}
+                        label="Failed pipeline executions"
+                        checked={!isSuccessful}
                         onChange={_ => setIsSuccessful(false)}
                     />
                 </div>

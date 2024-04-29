@@ -24,10 +24,10 @@ export default function RootLayout({
                     <NavbarBrand>Reto Bancolombia</NavbarBrand>
                     <Nav className="me-auto">
                         <NavLink href="/">Home</NavLink>
-                        <NavLink href="/repos">Repositories</NavLink>
                         <NavLink href="/commits">Commits</NavLink>
-                        <NavLink href="/pullrequests">Pull Requests</NavLink>
                         <NavLink href="/pipelines">Pipelines</NavLink>
+                        {/* <NavLink href="/repos">Repositories</NavLink>
+                        <NavLink href="/pullrequests">Pull Requests</NavLink> */}
                     </Nav>
                 </Container>
             </Navbar>

@@ -27,6 +27,6 @@ db.pipelines.createIndex({
     finished_at:1
 })
 db.pipelines.createIndex({
-    event_source:1,
-    result: 1
+    result: 1,
+    event_source:1
 })

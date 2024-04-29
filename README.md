@@ -51,7 +51,9 @@ Este es un servicio mixto de Python y FastAPI que sirve para mockear los eventos
 
 <mark>Este contenedor produce datos periodicamente. Para evitar llenar la base de datos, recordar cerrarlo, o ajustar el periodo de generación.</mark>
 
+## CI
 
+Se alcanzo a hacer una prueba de integración continua rudimentaria para correrle una prueba de `pytest` al proyecto de `event-ingestion`. No se alcanzo a automatizar el despliegue, pero en realidad es solo hacer SSH al servidor a la carpeta del proyecto, `git pull` y correr el comando `docker-compose -f docker-compose-planni --profile backend up -d --build`. No utilizé mejores soluciones como ECS, Elastic Beanstalk o parecidos por razones de presupuesto.
 
 ## Despliegue
 
@@ -61,9 +63,7 @@ El proyecto está creado para poder ser desplegado facilmente con Docker Compose
 
 En el caso de que se hagan cambios en el codigo, o se haga un `git pull` posterior, será necesario añadir la instrucción `--build` al comando de Docker Compose
 
-NGINX todavia no esta correctamente configurado, es lo unico. Sin embargo, todos los demas servicios deberian funcionar sobre localhost. Si se desea mayor seguridad (la cual quité por razones de desarrollo rapido), se pueden remover las instrucciones de `ports:` en todos los contenedores salvo `frontend` y  `nginx`. Unas complicaciones con mi servidor personal no me dejaron alcanzar a probar la segregacion de usuarios ocn privilegios limitados o la limitación de recursos. 
-
-Si lo logro desplegar (lo cual no prometo, debido a esos problemas previamente mencionados, lo desplegare en `https://reto.planni.me`)
+El proyecto esta desplegado en `https://reto.planni.me`. Para este despliegue se debe usar el archivo de docker compose `docker-compose-planni.yml`, y además agregar unos archivos validos de `fullchain.pem` y `privkey.pem` en la carpeta de `certificates/`.
 
 ## Consideraciones
 

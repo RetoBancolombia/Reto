@@ -4,8 +4,14 @@ import os
 import sys
 import time
 from datetime import datetime
+from typing import Callable
+
 import pika
+import pymongo.database
 from dotenv import load_dotenv
+
+from providers.azure import azure_process
+
 load_dotenv()
 from providers.github import github_process
 from providers.mongodb_conn import MongoManager
@@ -15,8 +21,9 @@ from providers.mongodb_conn import MongoManager
 Define the processors for each event source
 The value must be a function that receives the body of the message, and a mongo db
 """
-processors_dict = {
-    "github": github_process
+processors_dict: dict[str, Callable[[dict, pymongo.database.Database], None]] = {
+    "github": github_process,
+    "azure_pipelines": azure_process
 }
 
 

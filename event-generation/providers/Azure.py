@@ -1,3 +1,4 @@
+import datetime
 import json
 import random
 
@@ -19,6 +20,11 @@ class AzureProvider(Generator):
                                           weights=[1, 1], k=1)[0]
         print(f"Generating azure pipeline event: ${result_type}")
         ws_azure = create_connection(f"ws://{self.config["WS_HOST"]}/events/ingestion/azure/ws")
+        date_created = datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(
+            minutes=random.randint(0, 60 * 12),
+            days=random.randint(0, 3 * 365)
+        )
+        date_finished = date_created + datetime.timedelta(seconds=random.randint(1, 10 * 60))
         body = {
             "subscriptionId": fake.uuid4(),
             "notificationId": random.randint(1, 1000000),
@@ -56,8 +62,8 @@ class AzureProvider(Generator):
                             "name": "__default",
                             "state": "completed",
                             "result": result_type.lower(),
-                            "startTime": "2022-11-21T16:42:52.7761408Z",
-                            "finishTime": "2022-11-21T16:42:52.7761408Z"
+                            "startTime": date_created.isoformat().replace("+00:00", "Z"),
+                            "finishTime": date_finished.isoformat().replace("+00:00", "Z")
                         },
                     "stage":
                         {
@@ -81,8 +87,8 @@ class AzureProvider(Generator):
                                 },
                             "state": "completed",
                             "result": result_type.lower(),
-                            "createdDate": "2022-11-21T16:42:52.7761408Z",
-                            "finishedDate": "2022-11-21T16:42:52.7761408Z",
+                            "createdDate": date_created.isoformat().replace("+00:00", "Z"),
+                            "finishedDate": date_finished.isoformat().replace("+00:00", "Z"),
                             "id": 2,
                             "name": "2"
                         },
@@ -154,7 +160,7 @@ class AzureProvider(Generator):
                             "id": "be9b3917-87e6-42a4-a549-2bc06a7a878f"
                         }
                 },
-            "createdDate": "2022-11-21T16:42:53.5254422Z"
+            "createdDate": date_created.isoformat().replace("+00:00", "Z")
         }
         ws_azure.send(json.dumps(body))
         ws_azure.close()

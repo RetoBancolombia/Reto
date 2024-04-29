@@ -1,0 +1,41 @@
+name: Run tests
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test_ingestion:
+    runs-on: ubuntu-latest
+    services:
+      rabbit:
+        image: rabbitmq:3-management
+        env:
+          RABBITMQ_DEFAULT_PASS: pass
+        ports:
+          - 5672:5672
+    strategy:
+      matrix:
+        python-version: [ 3.12 ]
+    steps:
+      - uses: actions/checkout@v1
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        working-directory: ./event-ingestion
+        run: pip install --no-cache-dir --upgrade -r requirements.txt
+      - name: Run unit tests
+        working-directory: ./event-ingestion
+        env:
+          RABBIT_HOST: rabbit
+          RABBIT_PORT: 5672
+          RABBIT_USER: guest
+          RABBIT_PASS: pass
+        run: |
+          pip install pytest 
+          pipenv run pytest
+          
+      
+  

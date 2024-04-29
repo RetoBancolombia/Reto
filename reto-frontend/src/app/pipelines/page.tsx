@@ -40,7 +40,7 @@ export default function Pipelines() {
                     <FormCheck
                         type="radio"
                         label="Failed pipeline executions"
-                        checked={!{isSuccessful}}
+                        checked={!isSuccessful}
                         onChange={_ => setIsSuccessful(false)}
                     />
                 </div>

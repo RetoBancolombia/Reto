@@ -83,12 +83,12 @@ async def websocket_endpoint(websocket: WebSocket, channel: Annotated[BlockingCh
     """
     await websocket.accept()
     data = await websocket.receive_json()
-
+    await websocket.close()
     if data["eventType"] != "ms.vss-pipelines.job-state-changed-event":
-        await websocket.send_text("Ignored event type")
+        print(f"[{datetime.now(timezone.utc).isoformat()}] Ignored event type: ${data["eventType"]}")
         return
     else:
-        await websocket.send_text("Accepted event type")
+        print("Accepted event type")
 
     isoformat = datetime.now(timezone.utc).isoformat()
     data["event_timestamp"] = isoformat
@@ -100,4 +100,4 @@ async def websocket_endpoint(websocket: WebSocket, channel: Annotated[BlockingCh
         body=json.dumps(data)
     )
     print(f"[{isoformat}] Received event from Azure of type {data["eventType"]}")
-    await websocket.close()
+

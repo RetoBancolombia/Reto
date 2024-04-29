@@ -25,6 +25,7 @@ class AzureProvider(Generator):
             days=random.randint(0, 3 * 365)
         )
         date_finished = date_created + datetime.timedelta(seconds=random.randint(1, 10 * 60))
+        pipeline_id = random.randint(1, 1000000)
         body = {
             "subscriptionId": fake.uuid4(),
             "notificationId": random.randint(1, 1000000),
@@ -80,7 +81,7 @@ class AzureProvider(Generator):
                             "pipeline":
                                 {
                                     "url": "https://codedev.ms/org/091d79ee-dc21-465e-86a2-b4006b9d0921/_apis/Pipelines/2?revision=2",
-                                    "id": 2,
+                                    "id": pipeline_id,
                                     "revision": 2,
                                     "name": "TEST-CI",
                                     "folder": "\\"
@@ -89,13 +90,13 @@ class AzureProvider(Generator):
                             "result": result_type.lower(),
                             "createdDate": date_created.isoformat().replace("+00:00", "Z"),
                             "finishedDate": date_finished.isoformat().replace("+00:00", "Z"),
-                            "id": 2,
+                            "id": pipeline_id,
                             "name": "2"
                         },
                     "pipeline":
                         {
                             "url": "https://codedev.ms/org/091d79ee-dc21-465e-86a2-b4006b9d0921/_apis/Pipelines/2?revision=2",
-                            "id": 2,
+                            "id": pipeline_id,
                             "revision": 2,
                             "name": "TEST-CI",
                             "folder": "\\"

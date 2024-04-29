@@ -167,7 +167,7 @@ services:
       - AZURE_REPOS_ENABLED=false
       - GITLAB_ENABLED=false
       - GITHUB_ACTIONS_ENABLED=false
-      - AZURE_PIPELINES_ENABLED=false
+      - AZURE_PIPELINES_ENABLED=true
       - WS_HOST=event-ingestion:3205
     depends_on:
       - event-ingestion

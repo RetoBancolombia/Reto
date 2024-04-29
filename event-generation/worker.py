@@ -9,6 +9,7 @@ import dotenv
 from faker import Faker
 from websocket import create_connection
 
+from providers.Azure import AzureProvider
 from providers.github import GithubProvider
 
 
@@ -55,6 +56,8 @@ def worker():
         platform = random.choice(platform_bag)
         if platform == "github":
             GithubProvider(config).generate()
+        elif platform == "azure_pipelines":
+            AzureProvider(config).generate()
 
         """elif platform == "gitlab":
             # Add your GitLab specific code here

@@ -34,7 +34,7 @@ services:
       - frontend
   rabbit:
     container_name: rabbit 
-    user: rabbit
+    user: rabbitmq
     image: rabbitmq:3-management
     restart: on-failure
     environment:

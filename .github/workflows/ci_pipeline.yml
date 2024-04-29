@@ -30,7 +30,7 @@ jobs:
       - name: Run unit tests
         working-directory: ./event-ingestion
         env:
-          RABBIT_HOST: rabbit
+          RABBIT_HOST: localhost
           RABBIT_PORT: 5672
           RABBIT_USER: guest
           RABBIT_PASS: pass

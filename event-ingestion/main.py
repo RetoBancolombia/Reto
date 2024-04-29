@@ -74,3 +74,30 @@ async def websocket_endpoint(websocket: WebSocket, channel: Annotated[BlockingCh
     )
     print(f"[{isoformat}] Received event from GitHub of type {websocket.headers.get('X-GitHub-Event')}")
     await websocket.close()
+
+
+@app.websocket("/events/ingestion/azure/ws")
+async def websocket_endpoint(websocket: WebSocket, channel: Annotated[BlockingChannel, Depends(queue)]):
+    """
+    Websocket endpoint to receive events from GitHub
+    """
+    await websocket.accept()
+    data = await websocket.receive_json()
+    await websocket.close()
+    if data["eventType"] != "ms.vss-pipelines.job-state-changed-event":
+        print(f"[{datetime.now(timezone.utc).isoformat()}] Ignored event type: ${data["eventType"]}")
+        return
+    else:
+        print("Accepted event type")
+
+    isoformat = datetime.now(timezone.utc).isoformat()
+    data["event_timestamp"] = isoformat
+    data["event_source"] = "azure_pipelines"
+    data["event_type"] = data["eventType"]
+    channel.basic_publish(
+        exchange='',
+        routing_key='events',
+        body=json.dumps(data)
+    )
+    print(f"[{isoformat}] Received event from Azure of type {data["eventType"]}")
+

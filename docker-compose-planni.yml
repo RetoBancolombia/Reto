@@ -23,6 +23,7 @@ services:
     image: nginx
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./certificates:/etc/ssl/certs/reto.planni.me
     ports:
       - "80:80"
       - "443:443"
@@ -167,7 +168,7 @@ services:
       - AZURE_REPOS_ENABLED=false
       - GITLAB_ENABLED=false
       - GITHUB_ACTIONS_ENABLED=false
-      - AZURE_PIPELINES_ENABLED=true
+      - AZURE_PIPELINES_ENABLED=false
       - WS_HOST=event-ingestion:3205
     depends_on:
       - event-ingestion

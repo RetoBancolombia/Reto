@@ -23,3 +23,10 @@ db.pullrequests.createIndex({
     event_source: 1,
     action: 1
 })
+db.pipelines.createIndex({
+    finished_at:1
+})
+db.pipelines.createIndex({
+    event_source:1,
+    result: 1
+})
